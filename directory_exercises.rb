@@ -58,8 +58,10 @@ def selected_letter
   @selection = gets.chomp.to_s.capitalize
 end
 
+# select only the students from the 'students' array which start with the selected letter and are less than 12 letters
 def select_students(students)
-  @selected_students = students.select { |x| x[:name].start_with? (@selection) }
+  of_letter = students.select { |x| x[:name].start_with? (@selection) }
+  @selected_students = of_letter.select { |y| y[:name].length < 12 }
 end
 
 # print the list of students, iterating over the array to print name and cohort
