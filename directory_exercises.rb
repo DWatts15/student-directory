@@ -33,14 +33,14 @@ def input_students
   # create an empty array
   students = []
   # get the first name
-  name = gets.chomp
+  name = gets.chomp.capitalize
   # while the name is not empty, repeat this code
   while !name.empty? do
     # add the student hash to the array
     students << {name: name, cohort: :november}
     puts "Now we have #{students.count} students"
     # get another name from the user
-    name = gets.chomp
+    name = gets.chomp.capitalize
   end
   # return the array of students
   students
@@ -48,13 +48,23 @@ end
 
 # print the header
 def print_header
-  puts "The students of Villains Academy"
+  puts "The students of Villains Academy whose name begins with '#{@selection}'."
   puts "-------------"
+end
+
+# user should input a letter to be used to select the student names beginning with given letter
+def selected_letter
+  p "Select the students whose name starts with the letter...?"
+  @selection = gets.chomp.to_s.capitalize
+end
+
+def select_students(students)
+  @selected_students = students.select { |x| x[:name].start_with? (@selection) }
 end
 
 # print the list of students, iterating over the array to print name and cohort
 def print(students)
-  students.each_with_index do |student, index|
+  @selected_students.each_with_index do |student, index|
     puts "#{index}. #{student[:name]} (#{student[:cohort]} cohort)"
   end
 end
@@ -66,6 +76,8 @@ end
 
 #nothing happens until we call the methods
 students = input_students
+selected_letter
+chosen_by_first_letter = select_students(students)
 print_header
-print(students)
+print(chosen_by_first_letter)
 print_footer(students)
